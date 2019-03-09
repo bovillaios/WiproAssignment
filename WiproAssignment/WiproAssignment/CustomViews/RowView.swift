@@ -13,25 +13,19 @@ import Kingfisher
 class RowView: UIView {
     
     var row: Row? {
-        
         didSet {
-            
             if let urlString = row?.imageHref, let url = URL(string: urlString) {
-                
                 let processor = DownsamplingImageProcessor(size: CGSize(width: 50, height: 50))
                 rowImageView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "placeHolder.pdf"), options: [.processor(processor),.cacheOriginalImage]){ result in }
             } else {
-                
                 rowImageView.image = #imageLiteral(resourceName: "placeHolder.pdf")
             }
             titleLabel.text = row?.title
             descriptionLabel.text = row?.description
         }
-        
     }
     
     let rowImageView: UIImageView = {
-        
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -54,9 +48,7 @@ class RowView: UIView {
     }()
 
     override init(frame: CGRect){
-
         super.init(frame: frame)
-        
         let labelStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         labelStackView.axis = .vertical
         labelStackView.distribution = .fill
@@ -68,10 +60,8 @@ class RowView: UIView {
         mainStackView.distribution = .fill
         mainStackView.alignment = .center
         mainStackView.spacing = 10
-        
-        addSubview(mainStackView)
-        
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(mainStackView)
         
         mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
