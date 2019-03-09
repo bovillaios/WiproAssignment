@@ -33,7 +33,10 @@ private extension ViewController {
     func designTableView() {
         factTableView = UITableView.init(frame: view.frame, style: .plain)
         factTableView.dataSource = self
+        factTableView.delegate = self
         factTableView.translatesAutoresizingMaskIntoConstraints = true
+        factTableView.tableFooterView = UIView()
+        factTableView.allowsSelection = false
         view.addSubview(factTableView)
         
         factTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -42,7 +45,7 @@ private extension ViewController {
         factTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         factTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
-
+        
     }
     
     func fetchDataFromServer() {
@@ -66,12 +69,13 @@ private extension ViewController {
     
     func updateUI() {
         
+        title = factData?.title
         factTableView.reloadData()
     }
     
 }
 
-extension ViewController : UITableViewDataSource {
+extension ViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return factData?.rows.count ?? 0
@@ -82,6 +86,10 @@ extension ViewController : UITableViewDataSource {
         let cellData: Row? = factData?.rows[indexPath.row]
         tableViewCell.textLabel?.text = cellData?.title
         return tableViewCell
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
