@@ -1,5 +1,5 @@
 //
-//  RowTableviewCell.swift
+//  RowView.swift
 //  WiproAssignment
 //
 //  Created by GGKU5MACBOOK003 on 09/03/19.
@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import Kingfisher
 
-class RowTableviewCell: UITableViewCell {
+class RowView: UIView {
     
     var row: Row? {
         
@@ -21,7 +21,7 @@ class RowTableviewCell: UITableViewCell {
                 let processor = DownsamplingImageProcessor(size: CGSize(width: 50, height: 50))
                 rowImageView.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "placeHolder.pdf"), options: [.processor(processor),.cacheOriginalImage]){ result in }
             } else {
-
+                
                 rowImageView.image = #imageLiteral(resourceName: "placeHolder.pdf")
             }
             titleLabel.text = row?.title
@@ -52,10 +52,10 @@ class RowTableviewCell: UITableViewCell {
         lbl.font = UIFont.systemFont(ofSize: 12)
         return lbl
     }()
-    
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+    override init(frame: CGRect){
+
+        super.init(frame: frame)
         
         let labelStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         labelStackView.axis = .vertical
@@ -68,34 +68,19 @@ class RowTableviewCell: UITableViewCell {
         mainStackView.distribution = .fill
         mainStackView.alignment = .center
         mainStackView.spacing = 10
-
-        contentView.addSubview(mainStackView)
+        
+        addSubview(mainStackView)
         
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
-        
-
-    
-
+        mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        mainStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
 }
