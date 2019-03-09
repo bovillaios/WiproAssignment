@@ -15,7 +15,6 @@ class RowView: UIView {
     var row: Row? {
         
         didSet {
-            
             if let urlString = row?.imageHref, let url = URL(string: urlString) {
                 
                 let processor = DownsamplingImageProcessor(size: CGSize(width: 50, height: 50))
@@ -27,11 +26,9 @@ class RowView: UIView {
             titleLabel.text = row?.title
             descriptionLabel.text = row?.description
         }
-        
     }
     
     let rowImageView: UIImageView = {
-        
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
@@ -54,9 +51,7 @@ class RowView: UIView {
     }()
 
     override init(frame: CGRect){
-
         super.init(frame: frame)
-        
         let labelStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         labelStackView.axis = .vertical
         labelStackView.distribution = .fill
@@ -64,14 +59,12 @@ class RowView: UIView {
         labelStackView.spacing = 2.5
         
         let mainStackView = UIStackView(arrangedSubviews: [rowImageView, labelStackView])
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.axis = .horizontal
         mainStackView.distribution = .fill
         mainStackView.alignment = .center
         mainStackView.spacing = 10
-        
         addSubview(mainStackView)
-        
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         mainStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
