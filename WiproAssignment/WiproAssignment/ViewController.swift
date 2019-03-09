@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Reachability
+import Kingfisher
 
 class ViewController: UIViewController {
     
@@ -31,12 +31,14 @@ private extension ViewController {
     }
     
     func designTableView() {
-        factTableView = UITableView.init(frame: view.frame, style: .plain)
+        
+        factTableView = UITableView()
+        factTableView.translatesAutoresizingMaskIntoConstraints = false
         factTableView.dataSource = self
         factTableView.delegate = self
-        factTableView.translatesAutoresizingMaskIntoConstraints = true
         factTableView.tableFooterView = UIView()
         factTableView.allowsSelection = false
+        factTableView.estimatedRowHeight = 500
         view.addSubview(factTableView)
         
         factTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -44,7 +46,7 @@ private extension ViewController {
         factTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         factTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        factTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
+        factTableView.register(RowTableviewCell.self, forCellReuseIdentifier: "CellIdentifier")
         
     }
     
@@ -82,13 +84,15 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
+        let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath) as! RowTableviewCell
         let cellData: Row? = factData?.rows[indexPath.row]
-        tableViewCell.textLabel?.text = cellData?.title
+        tableViewCell.row = cellData
         return tableViewCell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        
         return UITableView.automaticDimension
     }
 }

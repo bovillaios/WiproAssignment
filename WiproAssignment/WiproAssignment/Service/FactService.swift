@@ -15,6 +15,8 @@ class FactService {
         
         Alamofire.request("https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json").validate().responseData { (dataResponse) in
             
+            
+            
             guard dataResponse.result.isSuccess else {
                 
                 completionHandler(false, nil)

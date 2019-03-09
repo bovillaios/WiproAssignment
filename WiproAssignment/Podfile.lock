@@ -1,20 +1,20 @@
 PODS:
   - Alamofire (4.8.1)
-  - ReachabilitySwift (4.3.0)
+  - Kingfisher (5.2.0)
 
 DEPENDENCIES:
   - Alamofire (= 4.8.1)
-  - ReachabilitySwift
+  - Kingfisher
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
-    - ReachabilitySwift
+    - Kingfisher
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  Kingfisher: 07067cfacf371117330dceb4b4b8f5c4b691ab42
 
-PODFILE CHECKSUM: fa07fa2a72edaa4b8574a4c98ee98921568b7d18
+PODFILE CHECKSUM: 0d2c005d396d567a6dcb706ca288369bfed3a680
 
 COCOAPODS: 1.7.0.beta.1
