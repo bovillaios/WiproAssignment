@@ -44,7 +44,9 @@ class FactService {
             
             do {
                 
-               let fact = try JSONDecoder().decode(Fact.self, from: utf8Data)
+                var fact = try JSONDecoder().decode(Fact.self, from: utf8Data)
+                
+                fact.rows = fact.rows.filter({!($0.title == nil && $0.description == nil && $0.imageHref == nil)})
                 
                 completionHandler(true, fact)
                 return

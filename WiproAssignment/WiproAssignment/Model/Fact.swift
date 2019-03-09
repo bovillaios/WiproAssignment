@@ -10,7 +10,7 @@ import Foundation
 
 struct Fact: Codable {
     let title: String
-    let rows: [Row]
+    var rows: [Row]
 }
 
 struct Row: Codable {
