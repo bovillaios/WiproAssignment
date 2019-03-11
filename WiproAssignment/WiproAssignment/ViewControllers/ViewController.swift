@@ -27,16 +27,21 @@ class ViewController: UIViewController {
         fetchDataFromServer()
     }
 }
-
+//MARK: - Custom methods
 private extension ViewController {
     
     func designUIElements() {
-        
+        designNavigationBarUI()
         if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
             designCollectionView()
         } else {
             designTableView()
         }
+    }
+    
+    func designNavigationBarUI() {
+        let barButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshButtonClicked))
+        navigationItem.rightBarButtonItem = barButton
     }
     
     func designTableView() {
@@ -76,25 +81,22 @@ private extension ViewController {
     }
     
     func fetchDataFromServer() {
-        
-        ProgressHUD.show("Fetching Data....")
-
         factData = nil
         guard Connectivity.isConnectedToInternet() else {
-            presentAlertWithTitle(title: kAlertTitle, message: kNoInternet)
+            presentErrorAlertWithTitle(title: kAlertTitle, message: kNoInternet)
             updateUI()
             return
         }
-        
+        ProgressHUD.show("Fetching Data....")
         FactService.fetchFactData { [weak self](success, fact) in
+            ProgressHUD.dismiss()
             guard success, let fact = fact  else {
-                self?.presentAlertWithTitle(title: self?.kAlertTitle ?? "", message: self?.kErrorMessage ?? "")
+                self?.presentErrorAlertWithTitle(title: self?.kAlertTitle, message: self?.kErrorMessage)
                 self?.updateUI()
                 return
             }
             self?.factData = fact
             self?.updateUI()
-            ProgressHUD.dismiss()
         }
     }
     
@@ -104,7 +106,7 @@ private extension ViewController {
         factCollectionView?.reloadData()
     }
 }
-
+//MARK: - UITableViewDataSource, UITableViewDelegate
 extension ViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,7 +124,7 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
         return UITableView.automaticDimension
     }
 }
-
+//MARK: - UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -134,6 +136,14 @@ extension ViewController: UICollectionViewDataSource {
         let cellData: Row? = factData?.rows[indexPath.row]
         collectionviewCell.row = cellData
         return collectionviewCell
+    }
+}
+//MARK: - Button Clicks
+extension ViewController {
+    
+    @objc func refreshButtonClicked(sender: UIBarButtonItem)  {
+        
+        fetchDataFromServer()
     }
 }
 

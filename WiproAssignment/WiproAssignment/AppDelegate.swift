@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,13 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        // Add navigation controller to viewcontroller
         window = UIWindow(frame: UIScreen.main.bounds)
         let mainController = ViewController()
         let navigationController = UINavigationController(rootViewController: mainController)
         navigationController.navigationBar.isTranslucent = false
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+        // Remove cache images
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache { }
         return true
     }
 
