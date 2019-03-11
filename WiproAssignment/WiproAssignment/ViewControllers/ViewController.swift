@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class ViewController: UIViewController {
     
@@ -46,6 +47,7 @@ private extension ViewController {
         factTableView?.tableFooterView = UIView()
         factTableView?.allowsSelection = false
         factTableView?.estimatedRowHeight = 500
+        factTableView?.accessibilityIdentifier = "fact---table"
         factTableView?.register(RowTableviewCell.self, forCellReuseIdentifier: kCellIdentifer)
         view.addSubview(factTableView!)
         
@@ -74,6 +76,9 @@ private extension ViewController {
     }
     
     func fetchDataFromServer() {
+        
+        ProgressHUD.show("Fetching Data....")
+
         factData = nil
         guard Connectivity.isConnectedToInternet() else {
             presentAlertWithTitle(title: kAlertTitle, message: kNoInternet)
@@ -89,6 +94,7 @@ private extension ViewController {
             }
             self?.factData = fact
             self?.updateUI()
+            ProgressHUD.dismiss()
         }
     }
     
