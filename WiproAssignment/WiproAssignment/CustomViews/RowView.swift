@@ -43,7 +43,8 @@ class RowView: UIView {
     private let descriptionLabel : UILabel = {
         let lbl = UILabel()
         lbl.numberOfLines = 0
-        lbl.font = UIFont.systemFont(ofSize: 12)
+        lbl.font = UIFont.systemFont(ofSize: 13)
+        lbl.textColor = UIColor.darkGray
         return lbl
     }()
 
